@@ -9,12 +9,14 @@ import java.util.stream.Collectors;
 public class Rough {
     
     public static void main(String[] args) {
-        String str = "Hello, World!";
+        // List<String> words = List.of("apple", "banana", "cherry", "avocado", "blueberry");
+        
+        // List<String> res = words.stream().filter(w -> w.startsWith("b"))
+        // .map(String::toUpperCase).sorted().toList();
 
-        str.chars().mapToObj(s -> (char) s)
-        .collect(Collectors.groupingBy(s -> s, Collectors.counting())).entrySet().stream()
-        .filter(res -> res.getValue() > 1)
-        .collect(Collectors.toList());
+        // for (String str : res) {
+        //     System.out.println(str);
+        // }
     }
 
 }

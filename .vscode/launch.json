@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Rough",
+      "request": "launch",
+      "mainClass": "com.example.v2.Rough",
+      "projectName": "demo"
+    },
+    {
+      "type": "java",
+      "name": "Launch Main (demo)",
+      "request": "launch",
+      "mainClass": "com.example.v2.Main",
+      "projectName": "demo",
+      "cwd": "${workspaceFolder}/demo"
+    }
+  ]
+}
