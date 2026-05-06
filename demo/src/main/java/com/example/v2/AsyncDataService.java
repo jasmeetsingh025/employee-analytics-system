@@ -49,7 +49,7 @@ public class AsyncDataService {
                         int actualSal = actual.getOrDefault(dept, 0);
                         int remaining = budget - actualSal;
                         return dept + " | Budget " + budget + " | Actual " + actualSal + " | Remaining " + remaining;
-                    }).collect(Collectors.toList());
+                    }).toList();
         })
                 .thenAccept(lines -> lines.forEach(System.out::println))
                 .exceptionally(ex -> {

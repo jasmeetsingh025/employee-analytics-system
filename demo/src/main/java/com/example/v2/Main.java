@@ -23,5 +23,8 @@ public class Main {
         System.out.println("\n===== ALERT SERVICE =====");
         AlertService alert = new AlertService();
         alert.checkBudgetAlerts();
+
+        System.out.println("\n===== HIGHEST PAID EMPLOYEE IN EACH DEPT =====");
+        search.printHighestPaidEmployeeInEachDept();
     }
 }
