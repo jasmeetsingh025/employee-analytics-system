@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class Rough {
     
     public static void main(String[] args) {
-        // List<String> words = List.of("apple", "banana", "cherry", "avocado", "blueberry");
+        List<String> words = List.of("apple", "banana", "cherry", "avocado", "blueberry", "blackberry", "cantaloupe");
         
         // List<String> res = words.stream().filter(w -> w.startsWith("b"))
         // .map(String::toUpperCase).sorted().toList();
@@ -17,6 +17,10 @@ public class Rough {
         // for (String str : res) {
         //     System.out.println(str);
         // }
+
+        words.stream()
+        .collect(Collectors.groupingBy(word -> word.charAt(0)))
+        .forEach((letter, list) -> System.out.println(letter + " -> " + list));
     }
 
 }

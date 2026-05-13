@@ -27,7 +27,7 @@ public class AlertService {
             }).collect(Collectors.toList());
         })
         .thenAccept(alerts -> alerts.forEach(System.out::println))
-        .thenRun(() -> System.out.println("\nAll alerts processed."))
+        .thenRun(() -> System.out.println("All alerts processed."))
         .exceptionally(ex -> {
             System.out.println("Error: " + ex.getMessage());
             return null;
