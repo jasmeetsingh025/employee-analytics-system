@@ -17,6 +17,16 @@ public class EmployeeAnalyticsSystem {
     private final Semaphore dbConnectionPool = new Semaphore(2);
     private final ReportGenerator reportGenerator = new ReportGenerator(dbConnectionPool);
 
+    private static class Holder {
+        private static final EmployeeAnalyticsSystem INSTANCE = new EmployeeAnalyticsSystem();
+    }
+
+    private EmployeeAnalyticsSystem() {}
+
+    public static EmployeeAnalyticsSystem getInstance() {
+        return Holder.INSTANCE;
+    }
+
     public void runParallelReports() {
         reportGenerator.generateReport();
     }
