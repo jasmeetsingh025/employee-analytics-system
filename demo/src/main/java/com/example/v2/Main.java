@@ -30,5 +30,10 @@ public class Main {
         System.out.println("\n===== EMPLOYEE ANALYTICS SYSTEM (Latch + Semaphore + ThreadLocal) =====");
         EmployeeAnalyticsSystem analyticsSystem = EmployeeAnalyticsSystem.getInstance();
         analyticsSystem.runParallelReports();
+
+        System.out.println("\n===== EMPLOYEE REPORT GENERATION =====");
+        EmployeeReportFactory.createReport("console").generateReport();
+        EmployeeReportFactory.createReport("summary").generateReport();
+        EmployeeReportFactory.createReport("alert").generateReport();
     }
 }

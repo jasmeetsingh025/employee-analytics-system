@@ -59,4 +59,33 @@ public class AsyncDataService {
                 .get();
     }
 
+    public void printHeadCountAndTotalSalary() throws InterruptedException, ExecutionException {
+        CompletableFuture<List<Employee>> employeeList = loadEmployeesAsync();
+        CompletableFuture<Map<String, Integer>> deptBudget = loadDepartmentBudgetsAsync();
+
+        employeeList.thenCombine(deptBudget, (employee, budgets) -> {
+            Map<String, Long> headCount = employee.stream()
+                    .filter(e -> e.getDepartment() != null)
+                    .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()));
+
+            Map<String, Integer> totalSalary = employee.stream()
+                    .filter(e -> e.getDepartment() != null)
+                    .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.summingInt(Employee::getSalary)));
+
+            return headCount.entrySet().stream()
+                    .map(e -> {
+                        String dept = e.getKey();
+                        long count = e.getValue();
+                        int salary = totalSalary.getOrDefault(dept, 0);
+                        return dept + " -> " + count + " -> " + salary;
+                    }).collect(Collectors.toList());
+        })
+                .thenAccept(lines -> lines.forEach(System.out::println))
+                .exceptionally(ex -> {
+                    System.out.println("Error: " + ex.getMessage());
+                    return null;
+                })
+                .get();
+    }
+
 }
