@@ -35,5 +35,14 @@ public class Main {
         EmployeeReportFactory.createReport("console").generateReport();
         EmployeeReportFactory.createReport("summary").generateReport();
         EmployeeReportFactory.createReport("alert").generateReport();
+
+        System.out.println("\n===== REPORT CONFIGURATION =====");
+        ReportConfig config = new ReportConfig.Builder("summary")
+            .Department("IT")
+            .MinSalary(50000)
+            .IncludeAlerts(false)
+            .MaxResults(5)
+            .build();
+        System.out.println(config);
     }
 }
