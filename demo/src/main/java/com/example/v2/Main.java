@@ -44,5 +44,13 @@ public class Main {
             .MaxResults(5)
             .build();
         System.out.println(config);
+
+        System.out.println("\n===== EMPLOYEE FILTER CONTEXT =====");
+        EmployeeFilterContext context = new EmployeeFilterContext(new LowEarnersStrategy());
+        context.executeFilter();
+        context.setStrategy(new MidEarnersStrategy());
+        context.executeFilter();
+        context.setStrategy(new HighEarnersStrategy());
+        context.executeFilter();
     }
 }
