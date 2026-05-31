@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.employee.data.EmployeeDataStore;
 import com.example.employee.model.Employee;
+import com.example.employee.report.EmployeeReport;
+import com.example.employee.report.EmployeeReportFactory;
 import com.example.employee.service.EmployeeSearchService;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,4 +49,14 @@ public class EmployeeController {
             .orElse(ResponseEntity.notFound().build());
     }
     
+    @GetMapping("/reports/{type}")
+    public ResponseEntity<String> generateReport(@PathVariable("type") String type) {
+        try {
+            EmployeeReport report = EmployeeReportFactory.createReport(type);
+            report.generateReport();
+            return ResponseEntity.ok("Report generated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: Failed to generate report\n" + e.getMessage());
+        }
+    }
 }
