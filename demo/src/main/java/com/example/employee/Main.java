@@ -1,0 +1,68 @@
+package com.example.employee;
+
+import com.example.employee.concurrency.EmployeeAnalyticsSystem;
+import com.example.employee.config.ReportConfig;
+import com.example.employee.filter.EmployeeFilterContext;
+import com.example.employee.filter.HighEarnersStrategy;
+import com.example.employee.filter.LowEarnersStrategy;
+import com.example.employee.filter.MidEarnersStrategy;
+import com.example.employee.report.EmployeeReportFactory;
+import com.example.employee.service.AlertService;
+import com.example.employee.service.AnalyticsService;
+import com.example.employee.service.AsyncDataService;
+import com.example.employee.service.EmployeeSearchService;
+
+import java.util.concurrent.ExecutionException;
+
+public class Main {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        System.out.println("===== ANALYTICS =====");
+        AnalyticsService analytics = new AnalyticsService();
+        analytics.getAverageSalaryByDepartment();
+        analytics.printTopThreeEarners();
+        analytics.printEmployeeCountByDepartment();
+
+        System.out.println("\n===== ASYNC REPORT =====");
+        AsyncDataService async = new AsyncDataService();
+        async.printBudgetVsActualReport();
+
+        System.out.println("\n===== EMPLOYEE SEARCH =====");
+        EmployeeSearchService search = new EmployeeSearchService();
+        search.printEmployeeDetails("Jasmeet");
+        search.printEmployeeDetails("Batman");
+        search.printEmployeeDetails("Ghost");
+
+        System.out.println("\n===== ALERT SERVICE =====");
+        AlertService alert = new AlertService();
+        alert.checkBudgetAlerts();
+
+        System.out.println("\n===== HIGHEST PAID EMPLOYEE IN EACH DEPT =====");
+        search.printHighestPaidEmployeeInEachDept();
+
+        System.out.println("\n===== EMPLOYEE ANALYTICS SYSTEM (Latch + Semaphore + ThreadLocal) =====");
+        EmployeeAnalyticsSystem analyticsSystem = EmployeeAnalyticsSystem.getInstance();
+        analyticsSystem.runParallelReports();
+
+        System.out.println("\n===== EMPLOYEE REPORT GENERATION =====");
+        EmployeeReportFactory.createReport("console").generateReport();
+        EmployeeReportFactory.createReport("summary").generateReport();
+        EmployeeReportFactory.createReport("alert").generateReport();
+
+        System.out.println("\n===== REPORT CONFIGURATION =====");
+        ReportConfig config = new ReportConfig.Builder("summary")
+            .Department("IT")
+            .MinSalary(50000)
+            .IncludeAlerts(false)
+            .MaxResults(5)
+            .build();
+        System.out.println(config);
+
+        System.out.println("\n===== EMPLOYEE FILTER CONTEXT =====");
+        EmployeeFilterContext context = new EmployeeFilterContext(new LowEarnersStrategy());
+        context.executeFilter();
+        context.setStrategy(new MidEarnersStrategy());
+        context.executeFilter();
+        context.setStrategy(new HighEarnersStrategy());
+        context.executeFilter();
+    }
+}
