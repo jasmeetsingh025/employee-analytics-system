@@ -6,6 +6,10 @@ spring:
     password: ${DB_PASSWORD:}
     driver-class-name: org.postgresql.Driver
 
+  profiles:
+    active: local
+  config:
+    import: application-${spring.profiles.active}.yaml
   # JPA settings
   jpa:
     hibernate:

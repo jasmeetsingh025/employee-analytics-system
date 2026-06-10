@@ -6,6 +6,7 @@
 *.war
 *.ear
 *.nar
+*.ps1
 
 # ========================
 # Maven build output
@@ -57,3 +58,6 @@ logs/
 # Spring Boot DevTools
 # ========================
 spring-devtools.properties
+
+mvnw.cmd
+mvnw
